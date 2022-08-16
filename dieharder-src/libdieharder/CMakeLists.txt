@@ -63,7 +63,6 @@ set(LIBDIEHARDER_SOURCES
   sample.c
   skein_block64.c
   skein_block_ref.c
-  static_get_bits.c
   std_test.c
   sts_monobit.c
   sts_runs.c
@@ -79,4 +78,4 @@ target_link_libraries(dieharder PUBLIC GSL::gsl)
 
 add_library(dieharder::dieharder ALIAS dieharder)
 
-install(TARGETS dieharder DESTINATION .)
+install(TARGETS dieharder RUNTIME DESTINATION bin LIBRARY DESTINATION lib)
