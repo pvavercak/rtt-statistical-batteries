@@ -15,6 +15,7 @@ target_include_directories(fips_battery PRIVATE
 )
 target_link_libraries(fips_battery PUBLIC
     nlohmann_json::nlohmann_json
+    $<$<CXX_COMPILER_ID:GNU>:stdc++fs>
 )
 
 install(TARGETS fips_battery RUNTIME DESTINATION bin)

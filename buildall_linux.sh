@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # Configuration:
@@ -18,7 +18,7 @@ for subdir in "${subdirectories[@]}"; do
 
   # Cleanup
   if [ -d $build_dir ]; then
-    /usr/bin/rm -rf $build_dir
+    rm -rf $build_dir
   fi
 
   mkdir -p $subdir/build && cd $_
