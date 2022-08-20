@@ -22,7 +22,6 @@ for subdir in "${subdirectories[@]}"; do
   fi
 
   mkdir -p $subdir/build && cd $_
-  conan install .. -b missing
   cmake -G Ninja -DCMAKE_BUILD_TYPE=$build_type -DCMAKE_INSTALL_PREFIX=$install_destination ..
   ninja
   ninja install

@@ -15,17 +15,52 @@ This battery is shipped only as a library, we have custom command-line interface
 * **BSI** Implementation was extracted from ParanoYa application (created at Faculty of Electrical Engineering and Information Technology, STU in Bratislava). Battery is not used by [RTT](https://github.com/crocs-muni/randomness-testing-toolkit).
 * **FIPS** [Source code](https://salsa.debian.org/hmh/rng-tools/-/blob/master/fips.c) Battery is not used by [RTT](https://github.com/crocs-muni/randomness-testing-toolkit).
 
-## Installation
-Build process was tested on Debian 8. All used tools should be also available on other Linux distributions.
+## Prerequisites
+* C/C++ compiler
+* CMake [official page](https://cmake.org/)
+* Ninja (optional, but recommended because of its speed) [official page](https://ninja-build.org)
+* nlohmann_json [github](https://github.com/nlohmann/json)
+* GNU Scientific Library [official page](https://www.gnu.org/software/software.html)
+* FFTW3 [official page](https://www.fftw.org/)
 
-### Quick build
+### C/C++ compiler
+Depending on your platform, there are several ways of how to install such compiler.
+`Keep in mind that on Windows`, compilation of this project was tested only with `MinGW GCC` compiler.
 
-    wget https://github.com/crocs-muni/rtt-statistical-batteries/archive/master.zip
-    unzip master.zip
-    cd rtt-statistical-batteries-master
-    sudo ./INSTALL
+### CMake installation
+It can be easily installed on linux via [the official shell scripts](https://cmake.org/download/):
+```bash
+chmod a+x cmake-<ver>-linux-x86_64.sh
+sudo ./cmake-<ver>-linux-x86_64.sh --skip-license --prefix=/usr
+```
+On Windows, an official `exe` script will help you with CMake installation.
 
-### Prerequisites
-All required packages are installed in script INSTALL. If you want to manually install them you will need following packages (or their equivalents): **libgsl0-dev**, **build-essential**, **autotools-dev**, **automake**, **libtool**.
+### nlohmann_json
+This dependency's source code is stored inside `.third_party` subfolder and it's built as an external `CMake` project in a project that needs this dependency. For more information about how CMake's `ExternalProject_Add` works, see [the documentation](https://cmake.org/cmake/help/latest/module/ExternalProject.html).
 
-For inspecting on how the batteries are built, see inside of the script **INSTALL**.
+### FFTW3
+Similar to `nlohmann`, this dependency is also stored inside `.third_party` subfolder and it's going to be built as an external `CMake` project whenever a dependent project needs to pre-compile it. For more information about how CMake's `ExternalProject_Add` works, see [the documentation](https://cmake.org/cmake/help/latest/module/ExternalProject.html).
+
+### GNU Scientific Library (GSL)
+This is the only dependency which has to be present in a system.
+It is quite easy to install on most of the popular linux distributions, for example on Ubuntu, you just run:
+```bash
+sudo apt-get install libgsl-dev
+```
+Inside MinGW environment (based on your toolchain), you need to run:
+```bash
+pacman -S mingw-w64-x86_64-gsl # for gcc
+# or
+pacman -S mingw-w64-clang-x86_64-gsl # for clang
+```
+or you can just search for a package on [this official MSYS site](https://packages.msys2.org/queue).
+
+## Compilation
+This is a straightforward process and you can take a look at `buildall_linux.sh` or `buildall_mingw.sh`
+to get the idea of compiling this project with `CMake`.
+In all of the cases, you just need to run couple of commands inside build directory:
+```bash
+cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=<some path> <path to CMakeLists.txt>
+ninja
+ninja install
+```
