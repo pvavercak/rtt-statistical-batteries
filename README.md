@@ -56,7 +56,7 @@ pacman -S mingw-w64-clang-x86_64-gsl # for clang
 or you can just search for a package on [this official MSYS site](https://packages.msys2.org/queue).
 
 ## Compilation
-This is a straightforward process and you can take a look at `buildall_linux.sh` or `buildall_mingw.sh`
+This is a straightforward process and you can take a look at `buildall_linux.sh, buildall_mingw.sh` or `buildall_macos.sh`
 to get the idea of compiling this project with `CMake`.
 In all of the cases, you just need to run couple of commands inside build directory:
 ```bash
@@ -64,3 +64,10 @@ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=<some path> <pa
 ninja
 ninja install
 ```
+
+### MacOS libgsl compilation
+In order to prevent linking issues, libgsl is built from sources for MacOS platform.
+This is required because of the `Non-Fat binary` vs `Fat binary` concept.
+You can take a look at `buildall_macos.sh` to see how it's done.
+Additionally, there is a special CMake variable `CMAKE_OSX_ARCHITECTURES` which is used
+to define what architectures a user want to include in resulting binaries.
