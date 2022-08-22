@@ -1,3 +1,6 @@
 .vscode/
 build/
 _build/
+gsl-2.7.tar.gz
+gsl-2.7/
+.gsl/

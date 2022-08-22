@@ -12,6 +12,7 @@ project(DIEHARDER VERSION 3.31.1 LANGUAGES C)
 include(TestBigEndian)
 test_big_endian(IS_BIG_ENDIAN)
 set(ENDIAN_HELPER_DEFINITION)
+
 if(IS_BIG_ENDIAN)
   set(ENDIAN_HELPER_DEFINITION "BIG_ENDIAN")
 else()
@@ -32,6 +33,10 @@ include_directories("${CMAKE_SOURCE_DIR}/include")
 include_directories("${CMAKE_BINARY_DIR}")
 
 configure_file(config.h.in config.h @ONLY)
+
+if(APPLE)
+  set(GSL_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/.gsl")
+endif()
 
 find_package(GSL REQUIRED)
 
